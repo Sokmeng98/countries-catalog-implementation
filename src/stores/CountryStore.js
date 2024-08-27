@@ -51,7 +51,13 @@ export const useCountryStore = defineStore("countryStore", () => {
     loading.value = true;
     error.value = null;
     try {
-      const response = await fetch("https://restcountries.com/v3.1/all");
+      const response = await new Promise(
+        (resolve) =>
+          setTimeout(
+            () => fetch("https://restcountries.com/v3.1/all").then(resolve),
+            1000
+          ) // Simulate a 2-second delay
+      );
       if (!response.ok) {
         throw new Error("Failed to fetch countries");
       }

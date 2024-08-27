@@ -11,7 +11,7 @@
         </div>
       </header>
       <div>
-        <div v-if="loading" class="text-center mt-4">Loading...</div>
+        <Spinner v-if="loading" />
         <div v-if="error" class="text-center text-red-500 mt-4">
           {{ error }}
         </div>
@@ -31,6 +31,7 @@ import { useCountryStore } from "./stores/CountryStore";
 import Search from "./components/Search.vue";
 import SortPagination from "./components/SortPagination.vue";
 import CountryList from "./components/CountryList.vue";
+import Spinner from "./components/Spinner.vue";
 
 const searchRef = ref(null);
 
