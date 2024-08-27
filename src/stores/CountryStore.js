@@ -62,6 +62,7 @@ export const useCountryStore = defineStore("countryStore", () => {
 
   // search country
   function searchCountries(query) {
+    console.log("kaka love", query);
     currentPage.value = 1; // Reset to the first page
     if (!query) {
       filteredCountries.value = countries.value;

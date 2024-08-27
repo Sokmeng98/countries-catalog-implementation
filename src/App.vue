@@ -6,8 +6,8 @@
           <div class="text-4xl font-bold mt-10 inline-block">
             Countries Catalog Implementation
           </div>
-          <Search />
-          <SortPagination />
+          <Search ref="searchRef" />
+          <SortPagination @reset="handleReset" />
         </div>
       </header>
       <div>
@@ -32,6 +32,8 @@ import Search from "./components/Search.vue";
 import SortPagination from "./components/SortPagination.vue";
 import CountryList from "./components/CountryList.vue";
 
+const searchRef = ref(null);
+
 // Initialize the store
 const countryStore = useCountryStore();
 countryStore.fetchCountries();
@@ -39,4 +41,10 @@ countryStore.fetchCountries();
 const displayedCountries = computed(() => countryStore.displayedCountries);
 const loading = computed(() => countryStore.loading);
 const error = computed(() => countryStore.error);
+
+const handleReset = () => {
+  if (searchRef.value) {
+    searchRef.value.clearSearch();
+  }
+};
 </script>

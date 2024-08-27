@@ -5,9 +5,12 @@
     <div class="sort-controls flex space-x-4">
       <button
         @click="setSortOrder('asc')"
+        :disabled="totalPages === 0"
         :class="[
           'px-4 py-2 rounded transition-colors duration-300 font-medium',
-          sortOrder === 'asc'
+          totalPages === 0
+            ? 'bg-gray-200 text-gray-500 cursor-not-allowed hover:bg-gray-200'
+            : sortOrder === 'asc'
             ? 'bg-blue-600 text-white'
             : 'bg-gray-200 text-gray-700 hover:bg-blue-500 hover:text-white',
         ]"
@@ -16,9 +19,12 @@
       </button>
       <button
         @click="setSortOrder('desc')"
+        :disabled="totalPages === 0"
         :class="[
           'px-4 py-2 rounded transition-colors duration-300 font-medium',
-          sortOrder === 'desc'
+          totalPages === 0
+            ? 'bg-gray-200 text-gray-500 cursor-not-allowed hover:bg-gray-200'
+            : sortOrder === 'desc'
             ? 'bg-blue-600 text-white'
             : 'bg-gray-200 text-gray-700 hover:bg-blue-500 hover:text-white',
         ]"
@@ -64,7 +70,7 @@
 
       <button
         @click="nextPage"
-        :disabled="currentPage === totalPages || totalPages === 1"
+        :disabled="currentPage === totalPages || totalPages <= 1"
         class="px-4 py-2 rounded bg-gray-200 text-gray-700 hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-300 font-medium"
       >
         Next
@@ -76,6 +82,8 @@
 <script setup>
 import { computed } from "vue";
 import { useCountryStore } from "../stores/CountryStore";
+
+const emit = defineEmits(["reset"]);
 
 const countryStore = useCountryStore();
 const currentPage = computed(() => countryStore.currentPage);
@@ -129,5 +137,6 @@ function setSortOrder(order) {
 function resetSortOrder() {
   countryStore.changeSortOrder(null);
   countryStore.searchCountries("");
+  emit("reset");
 }
 </script>
