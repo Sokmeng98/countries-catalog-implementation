@@ -1,5 +1,46 @@
-# Vue 3 + Vite
+# Countries Catalog Implementation
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+This project will show the list of countries around the world.
 
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
+### Vue Component Libraries
+
+- [Pinia](https://pinia.vuejs.org)
+- [Tailwind](https://tailwindcss.com)
+- [Headless UI](https://headlessui.com)
+- [VueUse](https://vueuse.org)
+
+### API Reference
+
+Base API Url: https://restcountries.com/v3.1
+
+#### Get all items
+
+```
+  GET /all
+```
+
+### Run VueJS app on Localhost
+
+Clone the project
+
+```bash
+  git clone https://github.com/Sokmeng98/countries-catalog-implementation.git
+```
+
+Go to the project directory
+
+```bash
+  cd countries-catalog-implementation
+```
+
+Install dependencies
+
+```bash
+  npm install
+```
+
+Start the server
+
+```bash
+  npm run dev
+```

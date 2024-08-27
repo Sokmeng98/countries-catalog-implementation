@@ -61,7 +61,7 @@
 </template>
 
 <script setup>
-import { ref, watch, defineEmits } from "vue";
+import { ref, watch } from "vue";
 import { useCountryStore } from "../stores/CountryStore";
 
 const countryStore = useCountryStore();
