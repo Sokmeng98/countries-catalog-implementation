@@ -7,13 +7,14 @@
             Countries Catalog Implementation
           </div>
           <Search />
+          <SortPagination />
         </div>
       </header>
       <div>
         <div v-if="loading">Loading...</div>
         <div v-if="error">{{ error }}</div>
-        <ul v-if="filteredCountries.length">
-          <li v-for="country in filteredCountries" :key="country.cca3">
+        <ul v-if="displayedCountries.length">
+          <li v-for="country in displayedCountries" :key="country.cca3">
             {{ country.name.official }}
           </li>
         </ul>
@@ -26,13 +27,14 @@
 import { ref, watch, computed } from "vue";
 import { useCountryStore } from "./stores/CountryStore";
 import Search from "./components/Search.vue";
+import SortPagination from "./components/SortPagination.vue";
 
 // Initialize the store
 const countryStore = useCountryStore();
 
 countryStore.fetchCountries();
 
-const filteredCountries = computed(() => countryStore.filteredCountries);
+const displayedCountries = computed(() => countryStore.displayedCountries);
 const loading = computed(() => countryStore.loading);
 const error = computed(() => countryStore.error);
 </script>
