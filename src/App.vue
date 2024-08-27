@@ -42,8 +42,10 @@ const displayedCountries = computed(() => countryStore.displayedCountries);
 const loading = computed(() => countryStore.loading);
 const error = computed(() => countryStore.error);
 
+// Method to handle the reset event emitted by the SortPagination component
 const handleReset = () => {
   if (searchRef.value) {
+    // Clear the search input when the reset button is clicked
     searchRef.value.clearSearch();
   }
 };

@@ -2,6 +2,7 @@
   <div
     class="pagination-controls flex flex-col md:flex-row justify-between items-center mt-6 space-y-4 md:space-y-0"
   >
+    <!-- Sort control buttons: Ascending, Descending, and Reset -->
     <div class="sort-controls flex space-x-4">
       <button
         @click="setSortOrder('asc')"
@@ -42,7 +43,7 @@
         Reset
       </button>
     </div>
-
+    <!-- Pagination controls: Previous and Next buttons, and page numbers -->
     <div class="pagination flex items-center space-x-2">
       <button
         @click="prevPage"
@@ -54,7 +55,7 @@
 
       <span class="flex space-x-1">
         <span
-          v-for="page in pagesForMobile"
+          v-for="page in paginationPages"
           :key="page"
           @click="goToPage(page)"
           :class="[
@@ -90,7 +91,8 @@ const currentPage = computed(() => countryStore.currentPage);
 const totalPages = computed(() => countryStore.totalPages);
 const sortOrder = computed(() => countryStore.sortOrder);
 
-const pagesForMobile = computed(() => {
+// Computed property to generate an array of page numbers optimized for mobile view
+const paginationPages = computed(() => {
   if (totalPages.value <= 5) {
     return [...Array(totalPages.value).keys()].map((i) => i + 1);
   } else {
@@ -112,28 +114,33 @@ const pagesForMobile = computed(() => {
   }
 });
 
+// Function to navigate to the previous page
 function prevPage() {
   if (currentPage.value > 1) {
     countryStore.goToPage(currentPage.value - 1);
   }
 }
 
+// Function to navigate to the next page
 function nextPage() {
   if (currentPage.value < totalPages.value) {
     countryStore.goToPage(currentPage.value + 1);
   }
 }
 
+// Function to navigate to a specific page
 function goToPage(page) {
   if (typeof page === "number") {
     countryStore.goToPage(page);
   }
 }
 
+// Function to change the sorting order (ascending or descending)
 function setSortOrder(order) {
   countryStore.changeSortOrder(order);
 }
 
+// Function to reset the sorting order to its default state and clear any search results
 function resetSortOrder() {
   countryStore.changeSortOrder(null);
   countryStore.searchCountries("");

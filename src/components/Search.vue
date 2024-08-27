@@ -1,5 +1,6 @@
 <template>
   <div class="relative mt-8">
+    <!-- Center the search bar container -->
     <div class="flex items-center justify-center">
       <div class="relative w-full max-w-md">
         <input
@@ -27,6 +28,7 @@
             ></path>
           </svg>
         </div>
+        <!-- Clear button appears only when there is a search query -->
         <button
           v-if="searchQuery"
           class="absolute inset-y-0 right-0 flex items-center pr-4 text-red-500 cursor-pointer hover:text-red-700 focus:outline-none"
@@ -51,6 +53,7 @@
         </button>
       </div>
     </div>
+    <!-- Error message displayed if an error occurs during search -->
     <div v-if="error" class="text-red-500 mt-2 text-center">
       {{ error }}
     </div>
@@ -65,15 +68,18 @@ const countryStore = useCountryStore();
 const searchQuery = ref("");
 const error = ref("");
 
+// Watch the searchQuery variable for changes and trigger the searchCountries function in the store
 watch(searchQuery, (newQuery) => {
   countryStore.searchCountries(newQuery);
 });
 
+// Function to clear the search input and reset the search results
 const clearSearch = () => {
   searchQuery.value = "";
   countryStore.searchCountries("");
 };
 
+// Expose the clearSearch function to the parent component if needed
 defineExpose({
   clearSearch,
 });

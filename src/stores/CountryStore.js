@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { ref, computed } from "vue";
 
+// Define the Pinia store named 'countryStore' using the Composition API pattern
 export const useCountryStore = defineStore("countryStore", () => {
   const countries = ref([]);
   const filteredCountries = ref([]);
@@ -11,10 +12,12 @@ export const useCountryStore = defineStore("countryStore", () => {
   const itemsPerPage = 25;
   const sortOrder = ref(null);
 
-  // display country on page
+  // Computed property to determine which countries should be displayed on the current page
   const displayedCountries = computed(() => {
+    // Create a copy of the filtered countries array for sorting and pagination
     let countriesToShow = [...filteredCountries.value];
 
+    // Sort the countries based on the current sort order
     if (sortOrder.value === "asc") {
       countriesToShow.sort((a, b) =>
         a.name.official
@@ -28,20 +31,22 @@ export const useCountryStore = defineStore("countryStore", () => {
           .localeCompare(a.name.official.toLowerCase())
       );
     } else {
+      // If no sort order is specified, display countries in random order
       countriesToShow = countriesToShow.sort(() => Math.random() - 0.5);
     }
 
+    // Calculate the starting and ending index
     const start = (currentPage.value - 1) * itemsPerPage;
     const end = start + itemsPerPage;
     return countriesToShow.slice(start, end);
   });
 
-  // total page
+  // Computed property to calculate the total number of pages based on the number of filtered countries
   const totalPages = computed(() => {
     return Math.ceil(filteredCountries.value.length / itemsPerPage);
   });
 
-  // fetch api
+  // Asynchronous function to fetch all countries from the API
   async function fetchCountries() {
     loading.value = true;
     error.value = null;
@@ -52,7 +57,7 @@ export const useCountryStore = defineStore("countryStore", () => {
       }
       const data = await response.json();
       countries.value = data;
-      filteredCountries.value = data; // Initialize with all countries
+      filteredCountries.value = data;
     } catch (err) {
       error.value = err.message;
     } finally {
@@ -60,7 +65,7 @@ export const useCountryStore = defineStore("countryStore", () => {
     }
   }
 
-  // search country
+  // Function to filter countries based on a search query
   function searchCountries(query) {
     currentPage.value = 1; // Reset to the first page
     if (!query) {
@@ -72,12 +77,14 @@ export const useCountryStore = defineStore("countryStore", () => {
     );
   }
 
+  // Function to change the current page, ensuring it stays within valid bounds
   function goToPage(page) {
     if (page >= 1 && page <= totalPages.value) {
       currentPage.value = page;
     }
   }
 
+  // Function to change the sort order, resetting to the first page after a sort order change
   function changeSortOrder(order) {
     sortOrder.value = order;
     currentPage.value = 1; // Reset to the first page on sort change

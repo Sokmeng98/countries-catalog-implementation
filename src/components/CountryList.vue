@@ -1,23 +1,24 @@
 <template>
   <div>
+    <!--Check if there are any countries to display and Loop through the countries array and create a card for each country -->
     <div
       v-if="countries.length"
-      class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 xl:gap-6 my-4 md:mb-12"
+      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 p-4"
     >
       <div
         v-for="(country, index) in countries"
         :key="index"
-        class="rounded-xl border shadow-lg overflow-hidden"
+        class="rounded-xl border shadow-lg overflow-hidden bg-white"
       >
         <div
-          class="aspect-[1.5] p-4 cursor-pointer"
+          class="aspect-[1.5] p-4 cursor-pointer hover:opacity-90 transition duration-300 ease-in-out"
           @click="viewCountryDetails(country)"
         >
           <img :src="country.flags.png" class="w-full h-full object-cover" />
         </div>
         <div class="p-4">
           <div
-            class="font-bold truncate cursor-pointer"
+            class="font-bold truncate cursor-pointer hover:text-blue-600 transition duration-300"
             :title="country.name.official"
             @click="viewCountryDetails(country)"
           >
@@ -26,8 +27,7 @@
         </div>
       </div>
     </div>
-
-    <!-- displaying country details -->
+    <!-- Modal for displaying detailed information about the selected country -->
     <TransitionRoot appear :show="isDialogOpen" as="template">
       <Dialog as="div" class="relative z-10" @close="closeModal">
         <TransitionChild
@@ -118,6 +118,7 @@ import {
   TransitionChild,
 } from "@headlessui/vue";
 
+// Define the props that this component expects
 const props = defineProps({
   countries: Array,
 });
@@ -125,11 +126,13 @@ const props = defineProps({
 const isDialogOpen = ref(false);
 const currentCountry = ref(null);
 
+// Function to open the modal and display details of the selected country
 const viewCountryDetails = (country) => {
   currentCountry.value = country;
   isDialogOpen.value = true;
 };
 
+// Function to close the modal dialog
 const closeModal = () => {
   isDialogOpen.value = false;
 };
